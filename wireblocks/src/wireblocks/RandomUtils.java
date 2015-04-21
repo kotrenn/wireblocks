@@ -1,0 +1,45 @@
+package wireblocks;
+
+import java.util.Random;
+
+public class RandomUtils
+{
+	public static final Random GENERATOR = new Random();
+	
+	/*
+	 * Takes a distribution of values and returns one of the values uniformly at
+	 * random.
+	 */
+	public static int randomFromDist(int[] distribution)
+	{
+		int index = RandomUtils.GENERATOR.nextInt(distribution.length);
+		return distribution[index];
+	}
+
+	/*
+	 * Creates an array of integers of length numValues, and shuffles according
+	 * to the Fisher-Yates (Knuth) Shuffle
+	 */
+	public static int[] createShuffledArray(int numValues)
+	{
+		/* Initialize an array with values from 0 to numValues - 1 */
+		int[] shuffledArray = new int[numValues];
+		for (int i = 0; i < numValues; ++i)
+			shuffledArray[i] = i;
+		
+		/* Now shuffle the array */
+		for (int i = 0; i < numValues; ++i)
+		{
+			int limit = numValues - i;
+			int a = RandomUtils.GENERATOR.nextInt(limit);
+			int b = limit - 1;
+			
+			/* Perform the swap */
+			int tmp = shuffledArray[a];
+			shuffledArray[a] = shuffledArray[b];
+			shuffledArray[b] = tmp;
+		}
+		
+		return shuffledArray;
+	}
+}
