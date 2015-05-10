@@ -1,5 +1,7 @@
 package wireblocks;
 
+import java.awt.Dimension;
+
 public class Vector2i implements Comparable<Vector2i>
 {
 	private int m_x;
@@ -43,7 +45,12 @@ public class Vector2i implements Comparable<Vector2i>
 	@Override
 	public String toString()
 	{
-		return "[" + String.valueOf(m_x) + ", " + String.valueOf(m_y) + "]";
+		return "[" + m_x + ", " + m_y + "]";
+	}
+	
+	public Dimension toDimension()
+	{
+		return new Dimension(m_x, m_y);
 	}
 	
 	public Vector2i setX(int x)

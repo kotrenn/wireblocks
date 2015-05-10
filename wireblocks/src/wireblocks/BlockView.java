@@ -9,7 +9,7 @@ public class BlockView
 
 	public BlockView()
 	{
-		m_size = 20;
+		m_size = 30;
 	}
 
 	public Vector2i getDims()

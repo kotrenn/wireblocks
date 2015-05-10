@@ -17,6 +17,7 @@ public class Game implements KeyListener
 	
 	public Game()
 	{
+		System.out.println(System.getProperty("java.version"));
 		m_frame = new JFrame("Wire Blocks");
 		m_frame.setSize(800, 600);
 		m_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,6 +37,7 @@ public class Game implements KeyListener
 		
 		// Put this at the end to recursively make all components visible
 		m_frame.setVisible(true);
+		m_frame.pack();
 	}
 	
 	private void buildNextPiece()
