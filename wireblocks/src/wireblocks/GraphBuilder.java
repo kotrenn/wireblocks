@@ -1,10 +1,10 @@
 package wireblocks;
 
-import graphtools.AdjacencyGraph;
-import graphtools.Graph;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import wireblocks.graphtools.AdjacencyGraph;
+import wireblocks.graphtools.Graph;
 
 public class GraphBuilder
 {

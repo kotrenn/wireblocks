@@ -1,10 +1,10 @@
 package wireblocks;
 
-import graphtools.Graph;
-
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Map;
+
+import wireblocks.graphtools.Graph;
 
 public class GridPainter
 {
