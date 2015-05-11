@@ -11,10 +11,11 @@ public class Game implements KeyListener
 	private Grid        m_grid;
 	private GridView    m_gridView;
 	private GridPhysics m_gridPhysics;
+	private GridPainter m_gridPainter;
 	private Polyomino   m_polyomino;
 	private PathFinder  m_pathFinder;
 	private boolean     m_updatingPhysics;
-	
+
 	public Game()
 	{
 		System.out.println(System.getProperty("java.version"));
@@ -22,35 +23,36 @@ public class Game implements KeyListener
 		m_frame.setSize(800, 600);
 		m_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		m_frame.addKeyListener(this);
-
+		
 		m_grid = new Grid(8, 16);
 		// m_grid = new Grid(6, 10);
 		// m_grid.randomize();
 		m_gridView = new GridView(m_grid);
 		m_frame.add(m_gridView);
-
+		
 		m_gridPhysics = new GridPhysics(Direction.SOUTH);
-		
+		m_gridPainter = new GridPainter(m_grid);
+
 		buildNextPiece();
-		
+
 		m_pathFinder = new PathFinder();
-		
+
 		// Put this at the end to recursively make all components visible
 		m_frame.setVisible(true);
 		m_frame.pack();
 	}
-	
+
 	private void buildNextPiece()
 	{
 		m_polyomino = new Polyomino();
 		m_polyomino.placeInGrid(m_grid, m_gridPhysics);
 	}
-
+	
 	private void updatePhysics()
 	{
 		m_updatingPhysics = true;
 	}
-	
+
 	public void run() throws InterruptedException
 	{
 		int sleepDelay = 10;
@@ -62,7 +64,7 @@ public class Game implements KeyListener
 			else
 			{
 				if (m_polyomino == null) buildNextPiece();
-
+				
 				int width = m_grid.getWidth();
 				int height = m_grid.getHeight();
 				Vector2i[] src = new Vector2i[height];
@@ -73,8 +75,8 @@ public class Game implements KeyListener
 					dst[y] = new Vector2i(width - 1, y);
 				}
 				Vector2i[] marked = m_pathFinder
-						.findConnectedCells(m_grid, src, Direction.WEST, dst,
-						                    Direction.EAST);
+				        .findConnectedCells(m_grid, src, Direction.WEST, dst,
+				                            Direction.EAST);
 				for (Vector2i loc : marked)
 					// m_grid.getBlock(loc).setActivated(true);
 					m_grid.setBlock(loc, null);
@@ -84,20 +86,20 @@ public class Game implements KeyListener
 			Thread.sleep(sleepDelay);
 		}
 	}
-	
+
 	public static void main(String[] args) throws InterruptedException
 	{
 		Game game = new Game();
-		
+
 		game.run();
 	}
-
+	
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
 		/* Make sure we have a piece queued up first */
 		if (m_polyomino == null) return;
-		
+
 		int key = e.getKeyCode();
 		if (key == KeyEvent.VK_UP)
 		{
@@ -125,19 +127,20 @@ public class Game implements KeyListener
 			m_gridPhysics.reverseGravity();
 			updatePhysics();
 		}
+		else if (key == KeyEvent.VK_G) m_gridPainter = new GridPainter(m_grid);
 	}
-
+	
 	@Override
 	public void keyReleased(KeyEvent arg0)
 	{
 		// TODO Auto-generated method stub
-
+		
 	}
-
+	
 	@Override
 	public void keyTyped(KeyEvent arg0)
 	{
 		// TODO Auto-generated method stub
-
+		
 	}
 }
