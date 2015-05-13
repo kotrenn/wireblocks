@@ -117,7 +117,11 @@ public class Game implements KeyListener
 		for (Vector2i loc : marked)
 			// m_grid.getBlock(loc).setActivated(true);
 			m_grid.setBlock(loc, null);
-		if (marked.length > 0) signalUpdatePhysics();
+		if (marked.length > 0)
+		{
+			m_gridPainter.shuffleColors();
+			signalUpdatePhysics();
+		}
 	}
 
 	public static void main(String[] args) throws InterruptedException
@@ -160,7 +164,9 @@ public class Game implements KeyListener
 			m_gridPhysics.reverseGravity();
 			signalUpdatePhysics();
 		}
-		else if (key == KeyEvent.VK_G) m_gridPainter.paintGrid();
+		else if (key == KeyEvent.VK_G)
+			m_gridPainter.paintGrid();
+		else if (key == KeyEvent.VK_H) m_gridPainter.clearGrid();
 	}
 	
 	@Override
