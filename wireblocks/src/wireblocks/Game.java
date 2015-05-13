@@ -144,10 +144,6 @@ public class Game implements KeyListener
 			m_polyomino = null;
 			signalUpdatePhysics();
 		}
-		// else if (key == KeyEvent.VK_LEFT)
-		// m_polyomino.rotate(m_grid, m_gridPhysics, Rotation.LEFT);
-		// else if (key == KeyEvent.VK_RIGHT)
-		// m_polyomino.rotate(m_grid, m_gridPhysics, Rotation.RIGHT);
 		else if (key == KeyEvent.VK_DOWN)
 			m_polyomino.rotate(m_grid, m_gridPhysics, Rotation.RIGHT);
 		else if (key == KeyEvent.VK_LEFT)
@@ -162,6 +158,7 @@ public class Game implements KeyListener
 				m_polyomino = null;
 			}
 			m_gridPhysics.reverseGravity();
+			m_gridPainter.clearGrid();
 			signalUpdatePhysics();
 		}
 		else if (key == KeyEvent.VK_G)
