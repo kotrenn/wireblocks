@@ -23,7 +23,6 @@
 package wireblocks;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -40,24 +39,33 @@ public class GridPainter
 	private static final Color   EDGE_COLOR = Color.magenta;
 	
 	Grid                         m_grid;
+	GraphBuilder                 m_graphBuilder;
 	Graph                        m_graph;
-	ArrayList<Integer>           m_buckets;
-	int                          m_numNodes;
-	int                          m_numRegions;
+	int                          m_numColors;
+	int[]                        m_colors;
 
 	public GridPainter(Grid grid)
 	{
 		m_grid = grid;
-		
-		GraphBuilder builder = new GraphBuilder(m_grid);
-		m_graph = builder.buildGraph();
+		m_graphBuilder = new GraphBuilder(m_grid);
+		m_numColors = 4;
+		m_colors = RandomUtils.createShuffledArray(m_numColors);
+		System.out.print("m_colors:");
+		for (int i = 0; i < m_numColors; ++i)
+			System.out.print(" " + m_colors[i]);
+		System.out.println("");
+	}
+	
+	public void paintGrid()
+	{
+		m_graph = m_graphBuilder.buildGraph();
 
-		System.out.println(builder);
+		System.out.println(m_graphBuilder);
 		
 		System.out.println(m_graph);
 		int[] colors = colorGraph();
 
-		paintCells(builder, colors);
+		paintCells(m_graphBuilder, colors);
 	}
 
 	private String vertexToString(int v)
@@ -80,7 +88,6 @@ public class GridPainter
 	private int[] colorGraph()
 	{
 		int numVertices = m_graph.numberOfVertices();
-		int numColors = 4;
 		
 		String[] vertexLabels = new String[numVertices];
 		
@@ -106,7 +113,7 @@ public class GridPainter
 		{
 			int u = edge.getX();
 			int v = edge.getY();
-			for (int color = 0; color < numColors; ++color)
+			for (int color = 0; color < m_numColors; ++color)
 			{
 				String edgeLabel = edgeToString(u, v, color);
 				edgeLabels.add(edgeLabel);
@@ -131,8 +138,11 @@ public class GridPainter
 		for (int v = 0; v < numVertices; ++v)
 		{
 			List<Integer> neighbors = m_graph.getNeighbors(v);
-			for (int color = 0; color < numColors; ++color)
+			
+			for (int i = 0; i < m_numColors; ++i)
 			{
+				int color = m_colors[i];
+				
 				/* Construct the name of this row */
 				String rowLabel = attachColorToString(vertexToString(v), color);
 
