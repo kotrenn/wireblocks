@@ -46,7 +46,9 @@ public class Block
 		 * First pick out how many wires to include. We want there to be fewer
 		 * numbers of high count wires to not make things *too* easy.
 		 */
-		int[] activeDistribution = { 2, 2, 2, 2, 3, 3, 4 };
+		// int[] activeDistribution = { 2, 2, 2, 2, 3, 3, 4 };
+		
+		int[] activeDistribution = { 2, 2, 3, 3 };
 		int activeWires = RandomUtils.randomFromDist(activeDistribution);
 		
 		/* Create a shuffled list from 0 to m_numWires - 1 */
@@ -100,6 +102,12 @@ public class Block
 	{
 		int index = Direction.getIndex(direction);
 		return m_wires[index];
+	}
+	
+	public void setWire(Direction direction, boolean value)
+	{
+		int index = Direction.getIndex(direction);
+		m_wires[index] = value;
 	}
 	
 	public void setFull()

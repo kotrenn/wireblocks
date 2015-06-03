@@ -67,7 +67,8 @@ public class Polyomino
 	
 	private void build()
 	{
-		int[] sizeDistribution = { 2, 2, 2, 2, 3, 3, 3, 4, 4, 5 };
+		// int[] sizeDistribution = { 2, 2, 2, 2, 3, 3, 3, 4, 4, 5 };
+		int[] sizeDistribution = { 2, 2, 2, 2, 3 };
 		int size = RandomUtils.randomFromDist(sizeDistribution);
 		// size = 6;
 		
@@ -117,8 +118,27 @@ public class Polyomino
 		for (Vector2i v : visited)
 		{
 			System.out.println("v = " + v);
+			
+			/* Build the block */
 			Block block = new Block();
+			
+			/* Make the block float */
 			block.setFloating(true);
+			
+			/* Now connect it to neighboring cells */
+			double internalConnectionChance = 0.3;
+			for (Direction direction : Direction.toArray())
+			{
+				Vector2i neighbor = v.add(direction.toVector());
+				if (visited.contains(neighbor))
+				{
+					boolean addWire = RandomUtils
+					        .randomDouble(internalConnectionChance);
+					if (addWire) block.setWire(direction, true);
+				}
+			}
+			
+			/* Create the Cell instance for this Block instance */
 			Cell cell = new Cell(v, block);
 			m_cells.add(cell);
 		}

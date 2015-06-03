@@ -28,6 +28,12 @@ public class RandomUtils
 {
 	public static final Random GENERATOR = new Random();
 
+	public static boolean randomDouble(double probability)
+	{
+		double value = RandomUtils.GENERATOR.nextDouble();
+		return value <= probability;
+	}
+	
 	/*
 	 * Takes a distribution of values and returns one of the values uniformly at
 	 * random.
@@ -37,7 +43,7 @@ public class RandomUtils
 		int index = RandomUtils.GENERATOR.nextInt(distribution.length);
 		return distribution[index];
 	}
-	
+
 	/*
 	 * Creates an array of integers of length numValues, and shuffles according
 	 * to the Fisher-Yates (Knuth) Shuffle
@@ -48,20 +54,20 @@ public class RandomUtils
 		int[] shuffledArray = new int[numValues];
 		for (int i = 0; i < numValues; ++i)
 			shuffledArray[i] = i;
-
+		
 		/* Now shuffle the array */
 		for (int i = 0; i < numValues; ++i)
 		{
 			int limit = numValues - i;
 			int a = RandomUtils.GENERATOR.nextInt(limit);
 			int b = limit - 1;
-
+			
 			/* Perform the swap */
 			int tmp = shuffledArray[a];
 			shuffledArray[a] = shuffledArray[b];
 			shuffledArray[b] = tmp;
 		}
-
+		
 		return shuffledArray;
 	}
 }
